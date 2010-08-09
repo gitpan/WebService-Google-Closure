@@ -1,6 +1,6 @@
 --- #YAML:1.0
 name:               WebService-Google-Closure
-version:            0.06
+version:            0.07
 abstract:           Perl interface to the Google Closure Javascript compiler service
 author:
     - Magnus Erixzon <magnus@erixzon.com>
