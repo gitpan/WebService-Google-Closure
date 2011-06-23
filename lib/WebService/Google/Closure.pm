@@ -9,7 +9,7 @@ use File::Slurp qw( slurp );
 use WebService::Google::Closure::Types qw( ArrayRefOfStrings CompilationLevel );
 use WebService::Google::Closure::Response;
 
-our $VERSION = '0.08';
+our $VERSION = '0.09';
 $VERSION = eval $VERSION;
 
 has js_code => (
@@ -94,6 +94,14 @@ sub _build_output_info {
 
 sub compile {
     my $self = shift;
+
+    if ( $self->compilation_level && $self->compilation_level eq 'NOOP' ) {
+        # Don't bother the compiler
+        return WebService::Google::Closure::Response->new(
+            format  => $self->output_format,
+            code    => $self->js_code,
+        );
+    }
 
     my $post_args = {};
     foreach my $arg (qw( js_code code_url compilation_level output_format output_info )) {
@@ -296,7 +304,7 @@ L<http://search.cpan.org/dist/WebService-Google-Closure/>
 
 =head1 LICENSE AND COPYRIGHT
 
-Copyright 2010 Magnus Erixzon.
+Copyright 2010-2011 Magnus Erixzon.
 
 This program is free software; you can redistribute it and/or modify it
 under the terms of either: the GNU General Public License as published
